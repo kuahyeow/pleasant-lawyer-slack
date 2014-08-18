@@ -10,7 +10,7 @@ app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
-app.get('/pleasant_lawyer', function(req, res) {
+app.all('/pleasant_lawyer', function(req, res) {
   var inputText = req.query.text
   if(!inputText) {
     res.send("text query parameter required")
