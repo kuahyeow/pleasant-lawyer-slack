@@ -36,6 +36,24 @@ app.post('/slack_lawyer', function(req, res) {
   slackTextToPL(inputText, req, res)
 })
 
+var slackTextToBeetil = function(inputText, req, res) {
+  var plPhrase  = slacker.splitSlackTextInput(inputText)
+  var number    = ""
+  if(plPhrase)
+    number = pleasantLawyer.stringToNumber(plPhrase)
+  slacker.sendToSlack(number, req, res)
+}
+
+app.get('/slack_beetil', function(req, res) {
+  var inputText = req.query.text
+  slackTextToBeetil(inputText, req, res)
+})
+
+app.post('/slack_beetil', function(req, res) {
+  var inputText = req.param('text')
+  slackTextToBeetil(inputText, req, res)
+})
+
 
 var port = Number(process.env.PORT || 5000);
 app.listen(port, function() {
