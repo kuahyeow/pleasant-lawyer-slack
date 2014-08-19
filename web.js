@@ -40,7 +40,7 @@ var slackTextToBeetil = function(inputText, req, res) {
   var plPhrase  = slacker.splitSlackTextInput(inputText)
   var number    = ""
   if(plPhrase)
-    number = pleasantLawyer.stringToNumber(plPhrase)
+    number = pleasantLawyer.stringToNumber(plPhrase.trim())
   slacker.sendToSlack(number, req, res)
 }
 
