@@ -23,6 +23,8 @@ var slackTextToPL = function(inputText, req, res) {
   var text    = ""
   if(number)
     text = pleasantLawyer.numberToWords(number)
+  if(text != "")
+    text = text + " " + "https://desk.gotoassist.com/goto?q=" + number
   slacker.sendToSlack(text, req, res)
 }
 
@@ -38,10 +40,13 @@ app.post('/slack_lawyer', function(req, res) {
 
 var slackTextToBeetil = function(inputText, req, res) {
   var plPhrase  = slacker.splitSlackTextInput(inputText)
-  var number    = ""
+  var number    = null
+  var text      = ""
   if(plPhrase)
     number = pleasantLawyer.stringToNumber(plPhrase.trim())
-  slacker.sendToSlack(number, req, res)
+  if(number)
+    text = number + " " + "https://desk.gotoassist.com/goto?q=" + number
+  slacker.sendToSlack(text, req, res)
 }
 
 app.get('/slack_beetil', function(req, res) {
