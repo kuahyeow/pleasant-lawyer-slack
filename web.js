@@ -4,6 +4,7 @@ var logfmt = require("logfmt");
 var app = express();
 PleasantLawyer = require('./pleasant-lawyer');
 var pleasantLawyer = new PleasantLawyer();
+var slacker = require('./slack');
 
 app.use(logfmt.requestLogger());
 // parse application/json
@@ -17,37 +18,22 @@ app.get('/', function(req, res) {
 });
 
 
-var inputTextToPL = function(inputText) {
-  if(!inputText) {
-    return
-  }
-
-  var number    = inputText.split(':')[1]
-  var text      = ""
-  if(number) {
+var slackTextToPL = function(inputText, req, res) {
+  var number  = slacker.splitSlackTextInput(inputText)
+  var text    = ""
+  if(number)
     text = pleasantLawyer.numberToWords(number)
-  }
-  return text
+  slacker.sendToSlack(text, req, res)
 }
 
-var sendToSlack = function(message, req, res) {
-  if(req.accepts('application/json')) {
-    res.send({text: message})
-  } else {
-    res.send(text)
-  }
-}
-
-app.get('/pleasant_lawyer', function(req, res) {
+app.get('/slack_lawyer', function(req, res) {
   var inputText = req.query.text
-  var text = inputTextToPL(inputText)
-  sendToSlack(text, req, res)
+  slackTextToPL(inputText, req, res)
 })
 
-app.post('/pleasant_lawyer', function(req, res) {
+app.post('/slack_lawyer', function(req, res) {
   var inputText = req.param('text')
-  var text = inputTextToPL(inputText)
-  sendToSlack(text, req, res)
+  slackTextToPL(inputText, req, res)
 })
 
 
