@@ -19,7 +19,7 @@ app.get('/', function(req, res) {
 
 
 var slackTextToPL = function(inputText, req, res) {
-  var number  = slacker.splitSlackTextInput(inputText)
+  var number  = slacker.splitSlackTextInput(inputText.trim())
   var text    = ""
   if(number)
     text = pleasantLawyer.numberToWords(number)
