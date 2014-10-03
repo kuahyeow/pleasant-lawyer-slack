@@ -17,6 +17,17 @@ app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
+app.get('/slack', function(req, res) {
+  var inputText = req.query.text
+  if(inputText) {
+    if(isNaN(parseInt(inputText.trim()))) {
+      res.send(pleasantLawyer.stringToNumber(inputText.trim()))
+    } else {
+      res.send(pleasantLawyer.numberToWords(inputText.trim()))
+    }
+  }
+})
+
 
 var slackTextToPL = function(inputText, req, res) {
   var number  = slacker.splitSlackTextInput(inputText.trim())
