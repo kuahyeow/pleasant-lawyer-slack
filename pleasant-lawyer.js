@@ -10,8 +10,12 @@ module.exports = function() {
     nounMap[nouns[i].substring(0, 3)] = i;
   }
 
+  this.isBeetilNumber = function(text) {
+    return ("" + text).match(/^[1-9]\d*$/);
+  };
+
   this.processTextInput = function(text){
-    if (isBeetilNumber(text)) {
+    if (this.isBeetilNumber(text)) {
       return this.numberToWords(+text)
     }
     else {
