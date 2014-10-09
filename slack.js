@@ -10,7 +10,7 @@ var Slacker = function() {
   })
 
   this.sendToSlack = function(channelName, text) {
-    if(tokens.outboundToken) {  // do nothing if not token configure
+    if(tokens.outboundToken) {  // do nothing if no token configured
       beetilBot({
         channel: channelName,
         text: text
