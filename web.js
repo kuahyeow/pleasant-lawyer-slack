@@ -59,7 +59,7 @@ app.post('/beetil', function(req, res) {
     return
   }
 
-  console.log(req.params)
+  console.log(req.body)
   //console.log(channelName)
   // privategroup
   // or random (need to append '#')
