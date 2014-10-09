@@ -64,9 +64,10 @@ app.post('/beetil', function(req, res) {
     if(channelName == "privategroup"){
       channelName = "@" + req.param('user_name')
     } else { // public group
-      chanenlName = "#" + channelName
+      channelName = "#" + channelName
     }
   }
+
 
   var result = constructResultFromQuery(inputText)
   slacker.sendToSlack(channelName, result)
