@@ -37,42 +37,34 @@ var constructResultFromQuery = function(inputText){
   return result
 }
 
-app.get('/beetil', function(req, res) {
-  var token = req.param('token')
-  if (!tokens.inboundToken){
-    res.status(500).send("token not found!")
-    return
-  }
-  if (token != tokens.inboundToken){
-    res.status(401).send("Invalid request")
-    return
-  }
-
-  var channelName = req.param('channel_name')
-  var inputText = req.param('text')
-  var result = constructResultFromQuery(inputText)
-  slacker.sendToSlack(channelName, result)
-  res.status(200).end()  // nothing to show to Slack
-})
 
 // Token has to be the same as provided by Slack
 // otherwise we open up the world to spam our channels!
 app.post('/beetil', function(req, res) {
   var token = req.param('token')
-  if (!tokens.inboundToken){
+  var inputText = req.param('text')
+  var channelName = req.param('channel_name')
+
+  if(!tokens.inboundToken){
     res.status(500).send("token not found!")
     return
   }
-  if (token != tokens.inboundToken){
+  if(token != tokens.inboundToken){
     res.status(401).send("Invalid request")
     return
   }
 
-  var channelName = req.param('channel_name')
+  if(!inputText) {
+    res.status(400).send("needs some input")
+    return
+  }
+
   console.log(channelName)
-  var inputText = req.param('text')
+  // privategroup
+  // or random (need to append '#')
+
   var result = constructResultFromQuery(inputText)
-  slacker.sendToSlack(channelName, result)
+  slacker.sendToSlack('#' + channelName, result)
   res.status(200).end()  // nothing to show to Slack
 })
 
