@@ -15,9 +15,11 @@
   "dependencies": {
     "body-parser": "^1.6.5",
     "express": "^4.8.4",
-    "logfmt": "^1.1.2"
+    "logfmt": "^1.1.2",
+    "slack-notify": "^0.1.2"
   },
   "devDependencies": {
+    "dotenv": "^0.4.0",
     "jasmine-node": "^1.14.5",
     "request": "^2.44.0"
   }

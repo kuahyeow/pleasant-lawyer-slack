@@ -1,18 +1,20 @@
+var tokens = require('./env_vars')
+
+var webhookUrl = "https://powershop.slack.com/services/hooks/incoming-webhook?token=" + tokens.outboundToken
+var slack = require('slack-notify')(webhookUrl);
+
 var Slacker = function() {
-  this.splitSlackTextInput = function(inputText) {
-    if(!inputText) {
-      return
-    }
+  var beetilBot = slack.extend({
+    username: 'Beetil',
+    icon_emoji: ':beetle:'
+  })
 
-    return inputText.split(':')[1]
-  }
-
-
-  this.sendToSlack = function(message, req, res) {
-    if(req.accepts('application/json')) {
-      res.send({text: message})
-    } else {
-      res.send(text)
+  this.sendToSlack = function(channelName, text) {
+    if(tokens.outboundToken) {  // do nothing if not token configure
+      beetilBot({
+        channel: channelName,
+        text: text
+      });
     }
   }
 }

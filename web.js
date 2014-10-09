@@ -1,12 +1,14 @@
+var tokens = require('./env_vars')
 var express = require("express");
 var bodyParser = require('body-parser');
 var logfmt = require("logfmt");
+var slacker = require('./slack');
+PleasantLawyer = require('./pleasant-lawyer');
+var pleasantLawyer = new PleasantLawyer();
+
 var app = express();
 exports.app = app
 
-PleasantLawyer = require('./pleasant-lawyer');
-var pleasantLawyer = new PleasantLawyer();
-var slacker = require('./slack');
 
 app.use(logfmt.requestLogger());
 // parse application/json
@@ -19,9 +21,7 @@ app.get('/', function(req, res) {
   res.send('Hello World!');
 });
 
-app.post('/slack', function(req, res) {
-  var inputText = req.param('text')
-
+var constructResultFromQuery = function(inputText){
   if(pleasantLawyer.isBeetilNumber(inputText.trim())) {
     var number = inputText.trim()
 
@@ -34,7 +34,31 @@ app.post('/slack', function(req, res) {
   }
 
   var result = "\"" + text + "\"" + " https://desk.gotoassist.com/goto?q=" + number
-  res.send(result)
+  return result
+}
+
+// Token has to be the same as provided by Slack
+// otherwise we open up the world to spam our channels!
+app.post('/beetil', function(req, res) {
+  var token = req.param('token')
+  if (!tokens.inboundToken){
+    res.status(500).send("token not found!")
+  }
+  if (token != tokens.inboundToken){
+    res.status(401).send("Invalid request")
+  }
+
+  var channelName = req.param('channel_name')
+  var inputText = req.param('text')
+  var result = constructResultFromQuery(inputText)
+  slacker.sendToSlack(channelName, result)
+  res.status(200).end()  // nothing to show to Slack
+})
+
+app.post('/slack', function(req, res) {
+  var inputText = req.param('text')
+
+  res.send(constructResultFromQuery(inputText))
 })
 
 
