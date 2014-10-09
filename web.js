@@ -30,10 +30,14 @@ var constructResultFromQuery = function(inputText){
     var text   = inputText.trim()
 
     var number = pleasantLawyer.processTextInput(text)
-    text       = pleasantLawyer.processTextInput(number)
+    if(number) {
+      text     = pleasantLawyer.processTextInput(number)
+    }
   }
 
-  var result = "\"" + text + "\"" + " https://desk.gotoassist.com/goto?q=" + number
+  if(number && text) {
+    var result = "\"" + text + "\"" + " https://desk.gotoassist.com/goto?q=" + number
+  }
   return result
 }
 
@@ -61,6 +65,11 @@ app.post('/beetil', function(req, res) {
   }
 
   var result = constructResultFromQuery(inputText)
+  if(!result) {
+    res.send("Sorry, could not understand " + inputText)
+    return
+  }
+
   slacker.sendToSlack(channelId, result)
   res.status(200).end()  // nothing to show to Slack
 })
