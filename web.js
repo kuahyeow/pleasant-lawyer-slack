@@ -38,6 +38,14 @@ var constructResultFromQuery = function(inputText){
 }
 
 app.get('/beetil', function(req, res) {
+  var token = req.param('token')
+  if (!tokens.inboundToken){
+    res.status(500).send("token not found!")
+  }
+  if (token != tokens.inboundToken){
+    res.status(401).send("Invalid request")
+  }
+
   var channelName = req.param('channel_name')
   var inputText = req.param('text')
   var result = constructResultFromQuery(inputText)
