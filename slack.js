@@ -5,7 +5,7 @@ var slack = require('slack-notify')(webhookUrl);
 
 var Slacker = function() {
   var beetilBot = slack.extend({
-    username: 'Beetil',
+    username: 'BeetilBot',
     icon_emoji: ':beetle:'
   })
 
