@@ -60,16 +60,6 @@ app.post('/beetil', function(req, res) {
     return
   }
 
-  // no capability for a private group :(
-  if(channelName) {
-    if(channelName == "privategroup"){
-      channelName = "@" + req.param('user_name')
-    } else { // public group
-      channelName = "#" + channelName
-    }
-  }
-
-
   var result = constructResultFromQuery(inputText)
   slacker.sendToSlack(channelId, result)
   res.status(200).end()  // nothing to show to Slack
