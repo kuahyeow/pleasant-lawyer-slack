@@ -41,9 +41,11 @@ app.get('/beetil', function(req, res) {
   var token = req.param('token')
   if (!tokens.inboundToken){
     res.status(500).send("token not found!")
+    return
   }
   if (token != tokens.inboundToken){
     res.status(401).send("Invalid request")
+    return
   }
 
   var channelName = req.param('channel_name')
@@ -59,9 +61,11 @@ app.post('/beetil', function(req, res) {
   var token = req.param('token')
   if (!tokens.inboundToken){
     res.status(500).send("token not found!")
+    return
   }
   if (token != tokens.inboundToken){
     res.status(401).send("Invalid request")
+    return
   }
 
   var channelName = req.param('channel_name')
