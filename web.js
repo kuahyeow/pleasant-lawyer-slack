@@ -59,13 +59,17 @@ app.post('/beetil', function(req, res) {
     return
   }
 
-  console.log(req.body)
-  //console.log(channelName)
-  // privategroup
-  // or random (need to append '#')
+  // no capability for a private group :(
+  if(channelName) {
+    if(channelName == "privategroup"){
+      channelName = "@" + req.param('user_name')
+    } else { // public group
+      chanenlName = "#" + channelName
+    }
+  }
 
   var result = constructResultFromQuery(inputText)
-  slacker.sendToSlack('#' + channelName, result)
+  slacker.sendToSlack(channelName, result)
   res.status(200).end()  // nothing to show to Slack
 })
 
