@@ -44,6 +44,7 @@ app.post('/beetil', function(req, res) {
   var token = req.param('token')
   var inputText = req.param('text')
   var channelName = req.param('channel_name')
+  var channelId   = req.param('channel_id')
 
   if(!tokens.inboundToken){
     res.status(500).send("Token not found!")
@@ -70,7 +71,7 @@ app.post('/beetil', function(req, res) {
 
 
   var result = constructResultFromQuery(inputText)
-  slacker.sendToSlack(channelName, result)
+  slacker.sendToSlack(channelId, result)
   res.status(200).end()  // nothing to show to Slack
 })
 
