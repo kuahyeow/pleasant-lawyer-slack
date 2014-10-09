@@ -1,5 +1,6 @@
 var request = require("request")
 
+// Remmber start a real web server with "node web.js" first
 describe("App", function() {
   describe("get /", function() {
     // TODO use http://blog.drewolson.org/post/14684497867/
@@ -9,7 +10,7 @@ describe("App", function() {
         expect(response.statusCode).toEqual(200);
         done();
       });
-    }, 250); // timeout after 250 ms
+    }, 250);
   });
 
   describe("post /slack", function() {
