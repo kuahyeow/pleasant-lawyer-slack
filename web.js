@@ -37,6 +37,14 @@ var constructResultFromQuery = function(inputText){
   return result
 }
 
+app.get('/beetil', function(req, res) {
+  var channelName = req.param('channel_name')
+  var inputText = req.param('text')
+  var result = constructResultFromQuery(inputText)
+  slacker.sendToSlack(channelName, result)
+  res.status(200).end()  // nothing to show to Slack
+})
+
 // Token has to be the same as provided by Slack
 // otherwise we open up the world to spam our channels!
 app.post('/beetil', function(req, res) {
