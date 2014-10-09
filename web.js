@@ -46,7 +46,7 @@ app.post('/beetil', function(req, res) {
   var channelName = req.param('channel_name')
 
   if(!tokens.inboundToken){
-    res.status(500).send("token not found!")
+    res.status(500).send("Token not found!")
     return
   }
   if(token != tokens.inboundToken){
@@ -55,11 +55,11 @@ app.post('/beetil', function(req, res) {
   }
 
   if(!inputText) {
-    res.status(400).send("needs some input")
+    res.status(400).send("Needs some input :)")
     return
   }
 
-  console.log(channelName)
+  //console.log(channelName)
   // privategroup
   // or random (need to append '#')
 
