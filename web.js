@@ -69,6 +69,7 @@ app.post('/beetil', function(req, res) {
   }
 
   var channelName = req.param('channel_name')
+  console.log(channelName)
   var inputText = req.param('text')
   var result = constructResultFromQuery(inputText)
   slacker.sendToSlack(channelName, result)
