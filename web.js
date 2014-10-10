@@ -45,10 +45,11 @@ var constructResultFromQuery = function(inputText){
 // Token has to be the same as provided by Slack
 // otherwise we open up the world to spam our channels!
 app.post('/beetil', function(req, res) {
-  var token = req.param('token')
-  var inputText = req.param('text')
+  var token       = req.param('token')
+  var inputText   = req.param('text')
   var channelName = req.param('channel_name')
   var channelId   = req.param('channel_id')
+  var userName    = req.param('user_name')
 
   if(!tokens.inboundToken){
     res.status(500).send("Token not found!")
@@ -70,7 +71,7 @@ app.post('/beetil', function(req, res) {
     return
   }
 
-  slacker.sendToSlack(channelId, result)
+  slacker.sendToSlack(channelId, userName + ": " + result)
   res.status(200).end()  // nothing to show to Slack
 })
 
