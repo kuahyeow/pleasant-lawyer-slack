@@ -2,8 +2,14 @@ var request = require("request")
 var dotenv = require('dotenv');
 dotenv._getKeyAndValueFromLine('spec.env');
 dotenv._setEnvs();
+console.log(process.env.INBOUND_TOKEN)
 
 // Remmber start a real web server with "node web.js" first
+
+var app = require("../web").app;
+var http = require("http");
+var server = http.createServer(app).listen(5000);
+
 describe("App", function() {
   describe("get /", function() {
     // TODO use http://blog.drewolson.org/post/14684497867/
@@ -66,3 +72,8 @@ describe("App", function() {
     }, 250)
   })
 });
+
+
+setTimeout(function(){
+  server.close()
+}, 2000)
