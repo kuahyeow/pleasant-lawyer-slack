@@ -1,6 +1,6 @@
 var tokens = require('./env_vars')
 
-var webhookUrl = "https://powershop.slack.com/services/hooks/incoming-webhook?token=" + tokens.outboundToken
+var webhookUrl = "https://hooks.slack.com/services/T024HQARK/B02NA1LLU/" + tokens.outboundToken
 var slack = require('slack-notify')(webhookUrl);
 
 var Slacker = function() {
