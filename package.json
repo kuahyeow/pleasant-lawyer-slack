@@ -1,6 +1,9 @@
 {
   "name": "pleasant-lawyer.herokuapp.com",
   "version": "0.0.1",
+  "engines": {
+    "node": "0.10.x"
+  },
   "description": "Node JS webapp to translate Pleasant Lawyer words to numbers and back",
   "main": "web.js",
   "scripts": {
